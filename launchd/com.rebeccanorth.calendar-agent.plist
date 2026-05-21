@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Every Sunday at 9:00 AM:
+    1. Shows a native macOS notification banner ("Time to plan your week!")
+    2. Opens a Terminal window and starts the planning agent automatically
+
+  INSTALL / RELOAD:
+    cp ~/DEV/calendar-agent/launchd/com.rebeccanorth.calendar-agent.plist ~/Library/LaunchAgents/
+    launchctl unload ~/Library/LaunchAgents/com.rebeccanorth.calendar-agent.plist 2>/dev/null
+    launchctl load   ~/Library/LaunchAgents/com.rebeccanorth.calendar-agent.plist
+
+  TEST:
+    launchctl start com.rebeccanorth.calendar-agent
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.rebeccanorth.calendar-agent</string>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Weekday</key>
+        <integer>0</integer>
+        <key>Hour</key>
+        <integer>9</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/rebeccanorth/DEV/calendar-agent/notify-and-launch.sh</string>
+    </array>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/calendar-agent.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/calendar-agent-error.log</string>
+</dict>
+</plist>
